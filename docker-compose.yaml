@@ -9,9 +9,9 @@ services:
     volumes:
       - ./app:/app/app
     environment:
-      DATABASE_URL_ASYNC: postgresql+asyncpg://app:pass@db_dev:5432/app_db
+      DATABASE_URL_ASYNC_INNER: postgresql+asyncpg://app:pass@database:5432/app_db
     depends_on:
-      db_dev:
+      database:
         condition: service_healthy
       redis:
         condition: service_healthy
@@ -36,9 +36,9 @@ services:
     volumes:
       - ./app:/app/app
     environment:
-      DATABASE_URL_ASYNC: postgresql+asyncpg://app:pass@db_dev:5432/app_db
+      DATABASE_URL_ASYNC_INNER: postgresql+asyncpg://app:pass@database:5432/app_db
     depends_on:
-      db_dev:
+      database:
         condition: service_healthy
       redis:
         condition: service_healthy
@@ -68,7 +68,7 @@ services:
     restart: unless-stopped
 
 
-  db_dev:
+  database:
     image: postgres:17
     container_name: database
     environment:
@@ -128,7 +128,7 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
-      db_dev:
+      database:
         condition: service_healthy
     restart: unless-stopped
     healthcheck:
@@ -149,7 +149,7 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
-      db_dev:
+      database:
         condition: service_healthy
     restart: unless-stopped
     volumes:
@@ -225,9 +225,9 @@ services:
     container_name: postgres_exporter
     restart: unless-stopped
     environment:
-      DATA_SOURCE_NAME: "postgresql://app:pass@db_dev:5432/app_db?sslmode=disable"
+      DATA_SOURCE_NAME: "postgresql://app:pass@database:5432/app_db?sslmode=disable"
     depends_on:
-      db_dev:
+      database:
         condition: service_healthy
 
   rabbitmq_exporter:

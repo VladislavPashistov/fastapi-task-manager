@@ -5,13 +5,23 @@ load_dotenv()
 
 
 class Settings(BaseSettings):
-    DATABASE_URL_ASYNC: str
-    DATABASE_URL_SYNC: str
+    # session backend + seed_loadtest_users.py
+    DATABASE_URL_ASYNC_INNER: str
 
+    # alembic out container (from localhost)
+    DATABASE_URL_SYNC_OUT: str
+
+    # pytest
+    DATABASE_URL_ASYNC_OUT: str
+
+    # alembic into container + session worker
+    DATABASE_URL_SYNC_INNER: str
+
+    # Celery
     CELERY_BROKER_URL: str
     CELERY_RESULT_BACKEND: str
 
-    DATABASE_URL_SYNC_: str
+    # Auth
     SECRET_KEY: str
     ACCESS_TOKEN_EXPIRE_MINUTES: int
 

@@ -7,9 +7,9 @@ from sqlalchemy.orm import sessionmaker
 
 
 def _get_db_uri() -> str:
-    url_db = os.environ.get("DATABASE_URL_SYNC")
+    url_db = os.environ.get("DATABASE_URL_SYNC_INNER")
     if not url_db:
-        raise RuntimeError("DATABASE_URL_SYNC is not set")
+        raise RuntimeError("DATABASE_URL_SYNC_INNER is not set")
     return url_db
 
 

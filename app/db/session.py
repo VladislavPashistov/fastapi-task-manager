@@ -6,7 +6,7 @@ from app.core.config import settings
 
 # создаём движок
 async_engine = create_async_engine(
-    settings.DATABASE_URL_ASYNC,
+    settings.DATABASE_URL_ASYNC_INNER,
     pool_pre_ping=True,
     echo=False
 )

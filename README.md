@@ -65,18 +65,14 @@ app/
 1) Создай `.env` в корне проекта:
 
 ```env
-# DB
-DATABASE_URL_ASYNC=postgresql+asyncpg://app:pass@localhost:5432/app_db
-DATABASE_URL_SYNC=postgresql+psycopg://app:pass@db_dev:5432/app_db
+DATABASE_URL_ASYNC_INNER=postgresql+asyncpg://app:pass@database:5432/app_db
+DATABASE_URL_SYNC_OUT=postgresql+psycopg://app:pass@localhost:5432/app_db
+DATABASE_URL_SYNC_INNER=postgresql+psycopg://app:pass@database:5432/app_db
+DATABASE_URL_ASYNC_OUT=postgresql+asyncpg://app:pass@localhost:5432/app_db
 
-# Alembic
-DATABASE_URL_SYNC_=postgresql+psycopg://app:pass@localhost:5432/app_db
-
-# Celery
 CELERY_BROKER_URL=amqp://app:pass@rabbitmq:5672//
 CELERY_RESULT_BACKEND=redis://redis:6379/0
 
-# Auth
 SECRET_KEY=change_me
 ACCESS_TOKEN_EXPIRE_MINUTES=60
 ```
@@ -106,7 +102,7 @@ poetry install
 Применение миграций:
 
 ```bash
-poetry run alembic upgrade head
+poetry run alembic -x env=out upgrade head
 ```
 
 Запуск API:

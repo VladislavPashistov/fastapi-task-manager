@@ -18,6 +18,7 @@ from app.core.config import settings
 @pytest.fixture(scope="session", autouse=True)
 def apply_migrations():
     alembic_cfg = Config("alembic.ini")
+    alembic_cfg.cmd_opts = type("obj", (), {"x": ["env=out"]})()
     command.upgrade(alembic_cfg, "head")
 
 
@@ -25,7 +26,7 @@ def apply_migrations():
 @pytest.fixture(scope="function")
 async def async_engine():
     async_engine = create_async_engine(
-        settings.DATABASE_URL_ASYNC,
+        settings.DATABASE_URL_ASYNC_OUT,
         echo=False,
     )
     try:

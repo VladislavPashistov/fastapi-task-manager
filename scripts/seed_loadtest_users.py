@@ -14,7 +14,7 @@ from app.core.security import hash_password
 
 # создаём движок
 async_engine = create_async_engine(
-    settings.DATABASE_URL_ASYNC_,
+    settings.DATABASE_URL_ASYNC_INNER,
     pool_pre_ping=True,
     echo=False
 )

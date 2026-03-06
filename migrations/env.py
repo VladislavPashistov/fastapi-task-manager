@@ -13,7 +13,13 @@ from alembic import context
 config = context.config
 load_dotenv()
 
-config.set_main_option("sqlalchemy.url", os.environ["DATABASE_URL_SYNC_"])
+env = context.get_x_argument(as_dictionary=True).get("env")
+if env == "in":
+    config.set_main_option("sqlalchemy.url", os.environ["DATABASE_URL_SYNC_INNER"])
+elif env == "out":
+    config.set_main_option("sqlalchemy.url", os.environ["DATABASE_URL_SYNC_OUT"])
+else:
+    raise ValueError("Unrecognized env. Valid options: in (from backend cont), out (from localhost)")
 # ending read env
 
 
