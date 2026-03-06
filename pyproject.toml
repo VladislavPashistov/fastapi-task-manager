@@ -19,7 +19,8 @@ dependencies = [
   "celery",
   "redis",
   "email-validator",
-  "python-multipart>=0.0.22"
+  "python-multipart>=0.0.22",
+  "prometheus_fastapi_instrumentator"
 ]
 
 [tool.poetry]

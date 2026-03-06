@@ -3,6 +3,7 @@ import logging
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.responses import JSONResponse
 from fastapi.exceptions import RequestValidationError, ResponseValidationError
+from sqlalchemy.exc import SQLAlchemyError
 
 from app.services import (
     UserAlreadyExists, InvalidLoginOrPassword, UserNotFound,
@@ -88,6 +89,14 @@ def register_exception_handlers(app: FastAPI) -> None:
         log.exception("Response validation error")
         msg = str(exc) or "Response validation error"
         return JSONResponse(status_code=500, content={"detail": msg})
+
+    @app.exception_handler(SQLAlchemyError)
+    async def sqlalchemy_error_handler(request: Request, exc: SQLAlchemyError):
+        log.exception("Database error: %s", exc)  # Логируем ошибку
+        return JSONResponse(
+            status_code=500,
+            content={"detail": "Database error occurred."},
+        )
 
     # Fallback
     @app.exception_handler(Exception)

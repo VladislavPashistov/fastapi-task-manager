@@ -24,11 +24,6 @@ async def register(
     return await create_user_service(db=db, data=data)
 
 
-# TODO(auth): доработать обработку ошибок логина
-# - неверный логин/пароль -> InvalidLoginOrPassword -> 401
-# - пользователь заблокирован -> UserInactive -> 403
-# - БД недоступна/ошибка БД -> SQLAlchemyError -> 500
-# - всё остальное -> Exception
 @router_auth.post(path="/login", response_model=Token, status_code=200)
 async def login(
         form: OAuth2PasswordRequestForm = Depends(),

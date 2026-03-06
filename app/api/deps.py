@@ -28,6 +28,5 @@ async def get_current_user(
     return user
 
 
-# TODO: подумать над реализацией refresh токена
 def check_recent_activity():
     raise NotImplementedError
